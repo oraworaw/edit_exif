@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import android.media.ExifInterface;
 import android.location.Location;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -13,14 +14,23 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** FlutterExifPlugin */
-public class FlutterExifPlugin implements MethodCallHandler {
+public class FlutterExifPlugin implements FlutterPlugin, MethodCallHandler {
+
+  private MethodChannel channel;
   /** Plugin registration. */
   private Result result;
   private MethodCall call;
 
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "edit_exif");
-    channel.setMethodCallHandler(new FlutterExifPlugin());
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    context = flutterPluginBinding.getApplicationContext();
+    channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "edit_exif");
+    channel.setMethodCallHandler(this);
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setMethodCallHandler(null);
   }
 
   @Override
