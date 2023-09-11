@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*; 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import android.content.Context;
 import android.media.ExifInterface;
 import android.location.Location;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -21,14 +22,14 @@ public class FlutterExifPlugin implements FlutterPlugin, MethodCallHandler {
   private MethodCall call;
 
   @Override
-  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+  public void onAttachedToEngine(FlutterPluginBinding flutterPluginBinding) {
     context = flutterPluginBinding.getApplicationContext();
     channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "edit_exif");
     channel.setMethodCallHandler(this);
   }
 
   @Override
-  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+  public void onDetachedFromEngine(FlutterPluginBinding binding) {
     channel.setMethodCallHandler(null);
   }
 
