@@ -25,7 +25,7 @@ public class FlutterExifPlugin implements FlutterPlugin, MethodCallHandler {
   @Override
   public void onAttachedToEngine(FlutterPluginBinding flutterPluginBinding) {
     context = flutterPluginBinding.getApplicationContext();
-    channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "edit_exif");
+    channel = new MethodChannel(flutterPluginBinding.binaryMessenger, "edit_exif");
     channel.setMethodCallHandler(this);
   }
 
