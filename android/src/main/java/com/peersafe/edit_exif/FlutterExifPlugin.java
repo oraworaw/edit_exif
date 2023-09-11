@@ -20,6 +20,7 @@ public class FlutterExifPlugin implements FlutterPlugin, MethodCallHandler {
   /** Plugin registration. */
   private Result result;
   private MethodCall call;
+  private Context context;
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding flutterPluginBinding) {
